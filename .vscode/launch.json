@@ -1,0 +1,14 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-DemoSpringSecurityApplication<mini-projet-spring-security>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "demo.spring.security.demospringsecurity.DemoSpringSecurityApplication",
+      "projectName": "mini-projet-spring-security",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}
