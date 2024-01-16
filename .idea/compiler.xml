@@ -7,11 +7,13 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="mini-projet-spring-security" />
+        <module name="back-fromagerie" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="back-fromagerie" options="-parameters" />
       <module name="mini-projet-spring-security" options="-parameters" />
     </option>
   </component>

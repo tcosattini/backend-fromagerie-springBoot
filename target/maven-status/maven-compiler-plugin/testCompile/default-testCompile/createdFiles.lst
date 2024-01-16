@@ -1,3 +1,3 @@
-demo/spring/security/backFromagerieSpringBoot/DelegatingPasswordEncoderTest.class
-demo/spring/security/backFromagerieSpringBoot/BCryptPasswordEncoderTest.class
-demo/spring/security/backFromagerieSpringBoot/DemoSpringSecurityApplicationTests.class
+demo\spring\security\backFromagerieSpringBoot\DelegatingPasswordEncoderTest.class
+demo\spring\security\backFromagerieSpringBoot\BCryptPasswordEncoderTest.class
+demo\spring\security\backFromagerieSpringBoot\DemoSpringSecurityApplicationTests.class

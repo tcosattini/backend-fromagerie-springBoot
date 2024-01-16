@@ -1,3 +1,9 @@
+<<<<<<< Updated upstream
 /Users/thibault/Desktop/WORKSPACE/diginamic/back-fromagerie-springBoot/src/test/java/backFromagerieSpringBoot/BCryptPasswordEncoderTest.java
 /Users/thibault/Desktop/WORKSPACE/diginamic/back-fromagerie-springBoot/src/test/java/backFromagerieSpringBoot/DemoSpringSecurityApplicationTests.java
 /Users/thibault/Desktop/WORKSPACE/diginamic/back-fromagerie-springBoot/src/test/java/backFromagerieSpringBoot/DelegatingPasswordEncoderTest.java
+=======
+D:\Perso\Diginamic Alternance Lead Dev\Cours Formations\2022_TP7_Data_Lead\code\projet_tp_7_SpringBoot\backend-fromagerie-springBoot\src\test\java\demo\spring\security\backFromagerieSpringBoot\DelegatingPasswordEncoderTest.java
+D:\Perso\Diginamic Alternance Lead Dev\Cours Formations\2022_TP7_Data_Lead\code\projet_tp_7_SpringBoot\backend-fromagerie-springBoot\src\test\java\demo\spring\security\backFromagerieSpringBoot\DemoSpringSecurityApplicationTests.java
+D:\Perso\Diginamic Alternance Lead Dev\Cours Formations\2022_TP7_Data_Lead\code\projet_tp_7_SpringBoot\backend-fromagerie-springBoot\src\test\java\demo\spring\security\backFromagerieSpringBoot\BCryptPasswordEncoderTest.java
+>>>>>>> Stashed changes
