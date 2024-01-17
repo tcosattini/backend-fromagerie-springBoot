@@ -1,6 +1,6 @@
-package demo.spring.security.backFromagerieSpringBoot.DTO;
+package backFromagerieSpringBoot.DTO;
 
-import demo.spring.security.backFromagerieSpringBoot.entity.ActiveUser;
+import backFromagerieSpringBoot.entity.ActiveUser;
 
 public class UserDTO {
   private String username;

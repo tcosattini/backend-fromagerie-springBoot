@@ -1,4 +1,4 @@
-package demo.spring.security.backFromagerieSpringBoot;
+package backFromagerieSpringBoot;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

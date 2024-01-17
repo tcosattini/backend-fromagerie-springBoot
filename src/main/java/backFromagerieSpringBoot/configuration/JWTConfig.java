@@ -1,4 +1,4 @@
-package demo.spring.security.backFromagerieSpringBoot.configuration;
+package backFromagerieSpringBoot.configuration;
 
 import java.security.Key;
 import java.util.Base64;

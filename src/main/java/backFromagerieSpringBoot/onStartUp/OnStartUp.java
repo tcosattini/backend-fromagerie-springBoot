@@ -1,9 +1,9 @@
-package demo.spring.security.backFromagerieSpringBoot.onStartUp;
+package backFromagerieSpringBoot.onStartUp;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import demo.spring.security.backFromagerieSpringBoot.repository.ActiveUserRepository;
+import backFromagerieSpringBoot.repository.ActiveUserRepository;
 
 @Component
 public class OnStartUp {

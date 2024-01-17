@@ -1,4 +1,4 @@
-package demo.spring.security.backFromagerieSpringBoot.controller;
+package backFromagerieSpringBoot.controller;
 
 import java.util.Date;
 import java.util.Map;
@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import demo.spring.security.backFromagerieSpringBoot.DTO.LoginDto;
-import demo.spring.security.backFromagerieSpringBoot.configuration.JWTConfig;
-import demo.spring.security.backFromagerieSpringBoot.entity.ActiveUser;
-import demo.spring.security.backFromagerieSpringBoot.repository.ActiveUserRepository;
+import backFromagerieSpringBoot.DTO.LoginDto;
+import backFromagerieSpringBoot.configuration.JWTConfig;
+import backFromagerieSpringBoot.entity.ActiveUser;
+import backFromagerieSpringBoot.repository.ActiveUserRepository;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;

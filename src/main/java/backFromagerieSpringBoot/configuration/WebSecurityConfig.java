@@ -1,4 +1,4 @@
-package demo.spring.security.backFromagerieSpringBoot.configuration;
+package backFromagerieSpringBoot.configuration;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -20,7 +20,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import demo.spring.security.backFromagerieSpringBoot.controller.JWTAuthorizationFilter;
+import backFromagerieSpringBoot.controller.JWTAuthorizationFilter;
 
 @Configuration
 @EnableMethodSecurity(securedEnabled = true)

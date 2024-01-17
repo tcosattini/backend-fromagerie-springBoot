@@ -1,4 +1,4 @@
-package demo.spring.security.backFromagerieSpringBoot.DTO;
+package backFromagerieSpringBoot.DTO;
 
 public class LoginDto {
 

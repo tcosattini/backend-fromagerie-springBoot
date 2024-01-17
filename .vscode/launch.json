@@ -9,6 +9,16 @@
       "projectName": "mini-projet-spring-security",
       "args": "",
       "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Spring Boot-DemoSpringSecurityApplication<back-fromagerie>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "backFromagerieSpringBoot.DemoSpringSecurityApplication",
+      "projectName": "back-fromagerie",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
     }
   ]
 }

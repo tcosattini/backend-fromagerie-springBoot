@@ -1,4 +1,4 @@
-package demo.spring.security.backFromagerieSpringBoot.controller;
+package backFromagerieSpringBoot.controller;
 
 import java.io.IOException;
 import java.util.List;
@@ -10,7 +10,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import demo.spring.security.backFromagerieSpringBoot.configuration.JWTConfig;
+import backFromagerieSpringBoot.configuration.JWTConfig;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 

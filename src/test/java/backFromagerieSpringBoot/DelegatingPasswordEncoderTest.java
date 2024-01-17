@@ -1,4 +1,4 @@
-package demo.spring.security.backFromagerieSpringBoot;
+package backFromagerieSpringBoot;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

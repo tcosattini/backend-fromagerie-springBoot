@@ -1,4 +1,4 @@
-package demo.spring.security.backFromagerieSpringBoot.controller;
+package backFromagerieSpringBoot.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import demo.spring.security.backFromagerieSpringBoot.DTO.UserDTO;
-import demo.spring.security.backFromagerieSpringBoot.entity.ActiveUser;
-import demo.spring.security.backFromagerieSpringBoot.service.AuthenticationService;
-import demo.spring.security.backFromagerieSpringBoot.service.UserService;
+import backFromagerieSpringBoot.DTO.UserDTO;
+import backFromagerieSpringBoot.entity.ActiveUser;
+import backFromagerieSpringBoot.service.AuthenticationService;
+import backFromagerieSpringBoot.service.UserService;
 
 @RestController
 @RequestMapping("user")

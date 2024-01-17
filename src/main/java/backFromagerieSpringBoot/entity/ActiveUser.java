@@ -1,4 +1,4 @@
-package demo.spring.security.backFromagerieSpringBoot.entity;
+package backFromagerieSpringBoot.entity;
 
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;

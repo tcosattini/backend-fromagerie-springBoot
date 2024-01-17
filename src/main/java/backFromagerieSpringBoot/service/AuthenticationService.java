@@ -1,4 +1,4 @@
-package demo.spring.security.backFromagerieSpringBoot.service;
+package backFromagerieSpringBoot.service;
 
 import java.util.List;
 
@@ -9,9 +9,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import demo.spring.security.backFromagerieSpringBoot.DTO.RegistrationDTO;
-import demo.spring.security.backFromagerieSpringBoot.entity.ActiveUser;
-import demo.spring.security.backFromagerieSpringBoot.repository.ActiveUserRepository;
+import backFromagerieSpringBoot.DTO.RegistrationDTO;
+import backFromagerieSpringBoot.entity.ActiveUser;
+import backFromagerieSpringBoot.repository.ActiveUserRepository;
 
 @Service
 public class AuthenticationService {

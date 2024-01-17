@@ -1,11 +1,11 @@
-package demo.spring.security.backFromagerieSpringBoot.service;
+package backFromagerieSpringBoot.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import demo.spring.security.backFromagerieSpringBoot.DTO.UserDTO;
-import demo.spring.security.backFromagerieSpringBoot.entity.ActiveUser;
-import demo.spring.security.backFromagerieSpringBoot.repository.ActiveUserRepository;
+import backFromagerieSpringBoot.DTO.UserDTO;
+import backFromagerieSpringBoot.entity.ActiveUser;
+import backFromagerieSpringBoot.repository.ActiveUserRepository;
 
 @Service
 public class UserService {
