@@ -5,13 +5,17 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.event.AuthenticationFailureBadCredentialsEvent;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
-
+import org.springframework.security.core.Authentication;
 import backFromagerieSpringBoot.DTO.LoginDto;
 import backFromagerieSpringBoot.DTO.RegistrationDTO;
 import backFromagerieSpringBoot.configuration.JWTConfig;
@@ -28,12 +32,21 @@ public class AuthenticationService {
   private ActiveUserRepository activeUserRepository;
   private PasswordEncoder passwordEncoder;
   private JWTConfig jwtConfig;
+  private BruteForceProtectionService bruteForceProtectionService;
+  private ApplicationEventPublisher applicationEventPublisher;
 
-  public AuthenticationService(PasswordEncoder passwordEncoder, ActiveUserRepository activeUserRepository,
-      JWTConfig jwtConfig) {
+  public AuthenticationService(
+      PasswordEncoder passwordEncoder,
+      ActiveUserRepository activeUserRepository,
+      JWTConfig jwtConfig,
+      ApplicationEventPublisher applicationEventPublisher,
+      BruteForceProtectionService bruteForceProtectionService) {
+
     this.passwordEncoder = passwordEncoder;
     this.activeUserRepository = activeUserRepository;
     this.jwtConfig = jwtConfig;
+    this.applicationEventPublisher = applicationEventPublisher;
+    this.bruteForceProtectionService = bruteForceProtectionService;
   }
 
   public ResponseEntity<String> registration(@RequestBody RegistrationDTO registrationDTO) {
@@ -52,11 +65,23 @@ public class AuthenticationService {
   }
 
   public ResponseEntity<Object> login(@RequestBody LoginDto loginDto) {
+
     return this.activeUserRepository.findByUsername(loginDto.getUsername())
-        .filter(user -> this.passwordEncoder.matches(loginDto.getPassword(), user.getPassword()))
+        .filter(user -> this.passwordEncoder.matches(loginDto.getPassword(), user.getPassword())
+            && !this.bruteForceProtectionService.isBruteForceAttack(loginDto.getUsername()))
         .map(user -> ResponseEntity.ok().header(org.springframework.http.HttpHeaders.SET_COOKIE, buildJWTCookie(user))
             .build())
-        .orElseGet(() -> ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
+        .orElseGet(() -> {
+          BadCredentialsException e = new BadCredentialsException("Bad credentials");
+          AuthenticationFailureBadCredentialsEvent event = new AuthenticationFailureBadCredentialsEvent(
+              createAuthentication(loginDto.getUsername(), null), e);
+          applicationEventPublisher.publishEvent(event);
+          if (this.bruteForceProtectionService.isBruteForceAttack(loginDto.getUsername())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body("Your account is locked, please update your passeword");
+          }
+          return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        });
   }
 
   private String buildJWTCookie(ActiveUser user) {
@@ -76,5 +101,12 @@ public class AuthenticationService {
         .build();
 
     return tokenCookie.toString();
+  }
+
+  private Authentication createAuthentication(String username, Object credentials) {
+    // Logique pour créer l'objet Authentication (par exemple, utiliser
+    // UsernamePasswordAuthenticationToken)
+    // Retournez l'objet Authentication créé
+    return new UsernamePasswordAuthenticationToken(username, credentials);
   }
 }

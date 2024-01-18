@@ -2,6 +2,7 @@ package backFromagerieSpringBoot.configuration;
 
 import java.util.Arrays;
 import java.util.Map;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
@@ -44,6 +45,7 @@ public class WebSecurityConfig {
     return source;
   }
 
+
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http, JWTAuthorizationFilter jwtFilter, JWTConfig jwtConfig)
       throws Exception {
@@ -73,6 +75,7 @@ public class WebSecurityConfig {
             headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
 
         .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+
         .logout(logout -> logout
             // en cas de succès un OK est envoyé
             .logoutUrl("/logout")
@@ -82,5 +85,6 @@ public class WebSecurityConfig {
 
     return http.build();
   }
+
 
 }

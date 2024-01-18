@@ -19,6 +19,9 @@ public class ActiveUser {
   private String username;
   private String password;
   private String email;
+  // Bruteforce new fields
+  private int failedLoginAttempts;
+  private boolean loginDisabled;
 
   public String getEmail() {
     return email;
@@ -64,6 +67,22 @@ public class ActiveUser {
 
   public java.util.List<String> getRoles() {
     return roles;
+  }
+
+  public int getFailedLoginAttempts() {
+    return failedLoginAttempts;
+  }
+
+  public void setFailedLoginAttempts(int failedLoginAttempts) {
+    this.failedLoginAttempts = failedLoginAttempts;
+  }
+
+  public boolean isLoginDisabled() {
+    return loginDisabled;
+  }
+
+  public void setLoginDisabled(boolean loginDisabled) {
+    this.loginDisabled = loginDisabled;
   }
 
   public ActiveUser(String username, String password,String email, java.util.List<String> roles) {

@@ -10,7 +10,6 @@ import backFromagerieSpringBoot.service.AuthenticationService;
 
 @RestController
 @RequestMapping("login")
-
 public class SessionCtrl {
 
   private AuthenticationService authenticationService;
@@ -23,6 +22,5 @@ public class SessionCtrl {
   public ResponseEntity<Object> login(@RequestBody LoginDto loginDto) {
     return this.authenticationService.login(loginDto);
   }
-
 
 }
