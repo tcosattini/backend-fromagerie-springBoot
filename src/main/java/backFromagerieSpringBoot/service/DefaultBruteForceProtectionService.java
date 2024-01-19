@@ -3,7 +3,6 @@ package backFromagerieSpringBoot.service;
 import backFromagerieSpringBoot.entity.ActiveUser;
 import backFromagerieSpringBoot.repository.ActiveUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -81,6 +80,7 @@ public class DefaultBruteForceProtectionService implements BruteForceProtectionS
       ActiveUser user = userOptional.get();
       user.setFailedResetPasswordAttempts(0);
       user.setResetPasswordDisabled(false);
+      userRepository.save(user);
     }
   }
 
