@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.security.core.Authentication;
 import backFromagerieSpringBoot.DTO.LoginDto;
 import backFromagerieSpringBoot.DTO.RegistrationDTO;
+import backFromagerieSpringBoot.DTO.ResetPasswordDTO;
 import backFromagerieSpringBoot.configuration.JWTConfig;
 import backFromagerieSpringBoot.entity.ActiveUser;
+import backFromagerieSpringBoot.event.ResetPasswordBadCredentialsEvent;
 import backFromagerieSpringBoot.repository.ActiveUserRepository;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -49,6 +51,12 @@ public class AuthenticationService {
     this.bruteForceProtectionService = bruteForceProtectionService;
   }
 
+  /**
+   * Registration process
+   * 
+   * @param RegistrationDTO
+   * @return ResponseEntity<Object>
+   */
   public ResponseEntity<String> registration(@RequestBody RegistrationDTO registrationDTO) {
 
     if (activeUserRepository.findByEmail(registrationDTO.getEmail()).isPresent()) {
@@ -64,26 +72,79 @@ public class AuthenticationService {
     return ResponseEntity.status(HttpStatus.CREATED).body("User created successfully");
   }
 
+  /**
+   * Login process
+   * 
+   * @param LoginDto
+   * @return ResponseEntity<Object>
+   */
   public ResponseEntity<Object> login(@RequestBody LoginDto loginDto) {
 
     return this.activeUserRepository.findByUsername(loginDto.getUsername())
         .filter(user -> this.passwordEncoder.matches(loginDto.getPassword(), user.getPassword())
-            && !this.bruteForceProtectionService.isBruteForceAttack(loginDto.getUsername()))
-        .map(user -> ResponseEntity.ok().header(org.springframework.http.HttpHeaders.SET_COOKIE, buildJWTCookie(user))
-            .build())
+            && !this.bruteForceProtectionService.isLoginBruteForceAttack(loginDto.getUsername()))
+        .map(user -> {
+          this.bruteForceProtectionService.resetLoginBruteForceCounter(user.getUsername());
+          this.bruteForceProtectionService.resetResetPasswordBruteForceCounter(user.getUsername());
+
+          return ResponseEntity.ok().header(org.springframework.http.HttpHeaders.SET_COOKIE, buildJWTCookie(user))
+              .build();
+        })
         .orElseGet(() -> {
           BadCredentialsException e = new BadCredentialsException("Bad credentials");
           AuthenticationFailureBadCredentialsEvent event = new AuthenticationFailureBadCredentialsEvent(
               createAuthentication(loginDto.getUsername(), null), e);
           applicationEventPublisher.publishEvent(event);
-          if (this.bruteForceProtectionService.isBruteForceAttack(loginDto.getUsername())) {
+          if (this.bruteForceProtectionService.isLoginBruteForceAttack(loginDto.getUsername())) {
+
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                .body("Your account is locked, please update your passeword");
+                .body("Your account is locked, please update your password");
           }
+
           return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         });
   }
 
+  /**
+   * Reset password process
+   * 
+   * @param ResetPasswordDTO
+   * @return ResponseEntity<Object>
+   */
+  public ResponseEntity<Object> resetPassword(@RequestBody ResetPasswordDTO resetPasswordDTO) {
+
+    return this.activeUserRepository.findByUsername(resetPasswordDTO.getUsername())
+        .filter(user -> this.passwordEncoder.matches(resetPasswordDTO.getLastPassword(),
+            user.getPassword())
+            && resetPasswordDTO.getNewPassword().equals(resetPasswordDTO.getNewPasswordRepeat())
+            && !this.bruteForceProtectionService
+                .isResetPasswordBruteForceAttack(resetPasswordDTO
+                    .getUsername()))
+        .map(user -> {
+          this.changePassword(user, resetPasswordDTO.getNewPassword());
+          return ResponseEntity.ok().build();
+        })
+        .orElseGet(() -> {
+          BadCredentialsException e = new BadCredentialsException("Bad credentials while resetting");
+          ResetPasswordBadCredentialsEvent event = new ResetPasswordBadCredentialsEvent(
+              createAuthentication(resetPasswordDTO.getUsername(), null), e);
+
+          applicationEventPublisher.publishEvent(event);
+          if (this.bruteForceProtectionService.isResetPasswordBruteForceAttack(resetPasswordDTO.getUsername())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body("Your account is locked, please contact an admin or sign-in again");
+          }
+          return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+              .body("Bad credentials or new passwords don't match");
+        });
+  }
+
+  /**
+   * Create JWT for the ActiveUser passed in param
+   * 
+   * @param ActiveUser
+   * @return String
+   */
   private String buildJWTCookie(ActiveUser user) {
     Keys.secretKeyFor(SignatureAlgorithm.HS512);
     String jetonJWT = Jwts.builder()
@@ -103,10 +164,27 @@ public class AuthenticationService {
     return tokenCookie.toString();
   }
 
+  /**
+   * Create authentication object used for dispatched events
+   * 
+   * @param username, credentials
+   * @return Authentication
+   */
   private Authentication createAuthentication(String username, Object credentials) {
-    // Logique pour créer l'objet Authentication (par exemple, utiliser
-    // UsernamePasswordAuthenticationToken)
-    // Retournez l'objet Authentication créé
     return new UsernamePasswordAuthenticationToken(username, credentials);
   }
+
+  /**
+   * Create authentication object used for dispatched events
+   * 
+   * @param user, newPassword
+   * @return ActiveUser
+   */
+  private ActiveUser changePassword(ActiveUser user, String newPassword) {
+    this.bruteForceProtectionService.resetLoginBruteForceCounter(user.getUsername());
+    this.bruteForceProtectionService.resetResetPasswordBruteForceCounter(user.getUsername());
+    user.setPassword(passwordEncoder.encode(newPassword));
+    return activeUserRepository.save(user);
+  }
+
 }

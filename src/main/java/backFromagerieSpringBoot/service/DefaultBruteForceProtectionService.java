@@ -14,6 +14,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class DefaultBruteForceProtectionService implements BruteForceProtectionService {
 
   private int maxFailedLogins = 5;
+  private int maxFailedResetPassword = 5;
 
   @Autowired
   ActiveUserRepository userRepository;
@@ -35,7 +36,7 @@ public class DefaultBruteForceProtectionService implements BruteForceProtectionS
       ActiveUser user = userOptional.get();
       int failedCounter = user.getFailedLoginAttempts();
       if (maxFailedLogins < failedCounter + 1) {
-        user.setLoginDisabled(true); // disabling the account
+        user.setLoginDisabled(true); // disabling login
       } else {
         // let's update the counter
         user.setFailedLoginAttempts(failedCounter + 1);
@@ -45,7 +46,25 @@ public class DefaultBruteForceProtectionService implements BruteForceProtectionS
   }
 
   @Override
-  public void resetBruteForceCounter(String username) {
+  public void registerResetPasswordFailure(String username) {
+
+    Optional<ActiveUser> userOptional = getUser(username);
+    System.out.println(userOptional);
+    if (userOptional.isPresent()) {
+      ActiveUser user = userOptional.get();
+      int failedCounter = user.getFailedResetPasswordAttempts();
+      if (maxFailedResetPassword < failedCounter + 1) {
+        user.setResetPasswordDisabled(true); // disabling reset password
+      } else {
+        // let's update the counter
+        user.setFailedResetPasswordAttempts(failedCounter + 1);
+      }
+      userRepository.save(user);
+    }
+  }
+
+  @Override
+  public void resetLoginBruteForceCounter(String username) {
     Optional<ActiveUser> userOptional = getUser(username);
     if (userOptional.isPresent()) {
       ActiveUser user = userOptional.get();
@@ -56,11 +75,31 @@ public class DefaultBruteForceProtectionService implements BruteForceProtectionS
   }
 
   @Override
-  public boolean isBruteForceAttack(String username) {
+  public void resetResetPasswordBruteForceCounter(String username) {
+    Optional<ActiveUser> userOptional = getUser(username);
+    if (userOptional.isPresent()) {
+      ActiveUser user = userOptional.get();
+      user.setFailedResetPasswordAttempts(0);
+      user.setResetPasswordDisabled(false);
+    }
+  }
+
+  @Override
+  public boolean isLoginBruteForceAttack(String username) {
     Optional<ActiveUser> userOptional = getUser(username);
     if (userOptional.isPresent()) {
       ActiveUser user = userOptional.get();
       return user.getFailedLoginAttempts() >= maxFailedLogins ? true : false;
+    }
+    return false;
+  }
+
+  @Override
+  public boolean isResetPasswordBruteForceAttack(String username) {
+    Optional<ActiveUser> userOptional = getUser(username);
+    if (userOptional.isPresent()) {
+      ActiveUser user = userOptional.get();
+      return user.getFailedResetPasswordAttempts() >= maxFailedResetPassword ? true : false;
     }
     return false;
   }

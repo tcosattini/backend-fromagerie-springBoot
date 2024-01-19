@@ -19,9 +19,20 @@ public class ActiveUser {
   private String username;
   private String password;
   private String email;
-  // Bruteforce new fields
+  // Login bruteforce fields
   private int failedLoginAttempts;
   private boolean loginDisabled;
+
+  // ResetPassword bruteforce fields
+  private int failedResetPasswordAttempts;
+  private boolean resetPasswordDisabled;
+
+  public ActiveUser(String username, String password, String email, java.util.List<String> roles) {
+    this.username = username;
+    this.password = password;
+    this.email = email;
+    this.roles = roles;
+  }
 
   public String getEmail() {
     return email;
@@ -85,11 +96,20 @@ public class ActiveUser {
     this.loginDisabled = loginDisabled;
   }
 
-  public ActiveUser(String username, String password,String email, java.util.List<String> roles) {
-    this.username = username;
-    this.password = password;
-    this.email = email;
-    this.roles = roles;
+  public int getFailedResetPasswordAttempts() {
+    return failedResetPasswordAttempts;
+  }
+
+  public void setFailedResetPasswordAttempts(int failedResetPasswordAttempts) {
+    this.failedResetPasswordAttempts = failedResetPasswordAttempts;
+  }
+
+  public boolean isResetPasswordDisabled() {
+    return resetPasswordDisabled;
+  }
+
+  public void setResetPasswordDisabled(boolean resetPasswordDisabled) {
+    this.resetPasswordDisabled = resetPasswordDisabled;
   }
 
 }

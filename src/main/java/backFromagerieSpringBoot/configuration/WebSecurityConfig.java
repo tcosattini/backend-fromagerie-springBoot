@@ -54,6 +54,7 @@ public class WebSecurityConfig {
         auth -> auth
             .requestMatchers(new AntPathRequestMatcher("/login", "POST")).permitAll()
             .requestMatchers(new AntPathRequestMatcher("/register", "POST")).permitAll()
+            .requestMatchers(new AntPathRequestMatcher("/reset-password", "POST")).permitAll()
             .requestMatchers(new AntPathRequestMatcher("/user", "POST")).permitAll()
             .requestMatchers(new AntPathRequestMatcher("/exemples", "GET")).permitAll()
             .requestMatchers(new AntPathRequestMatcher("/h2-console/**")).permitAll()
@@ -67,6 +68,7 @@ public class WebSecurityConfig {
         .csrf(csrf -> csrf
             .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
             .ignoringRequestMatchers(new AntPathRequestMatcher("/login"))
+            .ignoringRequestMatchers(new AntPathRequestMatcher("/reset-password"))
             .ignoringRequestMatchers(new AntPathRequestMatcher("/register"))
             .ignoringRequestMatchers(new AntPathRequestMatcher("/h2-console/**"))
             .csrfTokenRequestHandler(new XorCsrfTokenRequestAttributeHandler()::handle))
