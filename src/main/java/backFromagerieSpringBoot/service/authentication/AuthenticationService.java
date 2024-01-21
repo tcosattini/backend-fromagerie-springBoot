@@ -1,4 +1,4 @@
-package backFromagerieSpringBoot.service;
+package backFromagerieSpringBoot.service.authentication;
 
 import java.util.Date;
 import java.util.List;
@@ -12,13 +12,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.event.AuthenticationFailureBadCredentialsEvent;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.security.core.Authentication;
-import backFromagerieSpringBoot.DTO.LoginDto;
-import backFromagerieSpringBoot.DTO.RegistrationDTO;
-import backFromagerieSpringBoot.DTO.ResetPasswordDTO;
+import backFromagerieSpringBoot.DTO.authentication.LoginDto;
+import backFromagerieSpringBoot.DTO.authentication.RegistrationDTO;
+import backFromagerieSpringBoot.DTO.authentication.ResetPasswordDTO;
 import backFromagerieSpringBoot.configuration.JWTConfig;
 import backFromagerieSpringBoot.entity.ActiveUser;
 import backFromagerieSpringBoot.event.ResetPasswordBadCredentialsEvent;

@@ -7,8 +7,9 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.authentication.event.AuthenticationFailureBadCredentialsEvent;
 import org.springframework.stereotype.Component;
-import backFromagerieSpringBoot.service.BruteForceProtectionService;
-import backFromagerieSpringBoot.service.DefaultBruteForceProtectionService;
+
+import backFromagerieSpringBoot.service.authentication.BruteForceProtectionService;
+import backFromagerieSpringBoot.service.authentication.DefaultBruteForceProtectionService;
 
 
 
@@ -24,6 +25,13 @@ public class AuthenticationListener implements ApplicationListener<Authenticatio
     this.bruteForceProtectionService = bruteForceProtectionService;
   }
 
+  /**
+   * Dispatch an AuthenticationFailureBadCredentialsEvent
+   * during login process
+   * 
+   * @param AuthenticationFailureBadCredentialsEvent
+   * @return void
+   */
   @Override
   public void onApplicationEvent(AuthenticationFailureBadCredentialsEvent event) {
     String username = event.getAuthentication().getName();

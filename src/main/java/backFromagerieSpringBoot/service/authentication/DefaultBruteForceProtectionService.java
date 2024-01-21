@@ -1,7 +1,8 @@
-package backFromagerieSpringBoot.service;
+package backFromagerieSpringBoot.service.authentication;
 
 import backFromagerieSpringBoot.entity.ActiveUser;
 import backFromagerieSpringBoot.repository.ActiveUserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

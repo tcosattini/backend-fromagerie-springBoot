@@ -1,4 +1,4 @@
-package backFromagerieSpringBoot.controller;
+package backFromagerieSpringBoot.controller.authentication;
 
 import java.io.IOException;
 import java.util.List;

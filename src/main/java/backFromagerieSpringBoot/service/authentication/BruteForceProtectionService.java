@@ -1,4 +1,4 @@
-package backFromagerieSpringBoot.service;
+package backFromagerieSpringBoot.service.authentication;
 
 public interface BruteForceProtectionService {
 

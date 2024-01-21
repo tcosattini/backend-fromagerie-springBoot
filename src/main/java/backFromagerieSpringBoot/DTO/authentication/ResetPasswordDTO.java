@@ -1,4 +1,4 @@
-package backFromagerieSpringBoot.DTO;
+package backFromagerieSpringBoot.DTO.authentication;
 
 public class ResetPasswordDTO {
 

@@ -1,4 +1,4 @@
-package backFromagerieSpringBoot.DTO;
+package backFromagerieSpringBoot.DTO.authentication;
 
 import backFromagerieSpringBoot.entity.ActiveUser;
 

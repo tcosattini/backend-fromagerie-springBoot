@@ -7,7 +7,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
 import backFromagerieSpringBoot.event.ResetPasswordBadCredentialsEvent;
-import backFromagerieSpringBoot.service.BruteForceProtectionService;
+import backFromagerieSpringBoot.service.authentication.BruteForceProtectionService;
 
 @Component
 public class ResetPasswordListener implements ApplicationListener<ResetPasswordBadCredentialsEvent> {
@@ -21,6 +21,13 @@ public class ResetPasswordListener implements ApplicationListener<ResetPasswordB
     this.bruteForceProtectionService = bruteForceProtectionService;
   }
 
+  /**
+   * Dispatch an ResetPasswordBadCredentailsEvent
+   * during reset-password process
+   * 
+   * @param AuthenticationFailureBadCredentialsEvent
+   * @return void
+   */
   @Override
   public void onApplicationEvent(ResetPasswordBadCredentialsEvent event) {
     String username = event.getAuthentication().getName();
