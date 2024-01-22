@@ -13,8 +13,8 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class DefaultBruteForceProtectionService implements BruteForceProtectionService {
 
-  private int maxFailedLogins = 5;
-  private int maxFailedResetPassword = 5;
+  private final int maxFailedLogins = 5;
+  private final int maxFailedResetPassword = 5;
 
   @Autowired
   ActiveUserRepository userRepository;
@@ -27,6 +27,11 @@ public class DefaultBruteForceProtectionService implements BruteForceProtectionS
     this.cache = new ConcurrentHashMap<>(cacheMaxLimit); // setting max limit for cache
   }
 
+  /**
+   * Add 1 login failure attemp
+   * 
+   * @param username
+   */
   @Override
   public void registerLoginFailure(String username) {
 
@@ -45,6 +50,11 @@ public class DefaultBruteForceProtectionService implements BruteForceProtectionS
     }
   }
 
+  /**
+   * Add 1 reset-password failure attemp
+   * 
+   * @param username
+   */
   @Override
   public void registerResetPasswordFailure(String username) {
 
@@ -63,6 +73,11 @@ public class DefaultBruteForceProtectionService implements BruteForceProtectionS
     }
   }
 
+  /**
+   * Reset login counter
+   * 
+   * @param username
+   */
   @Override
   public void resetLoginBruteForceCounter(String username) {
     Optional<ActiveUser> userOptional = getUser(username);
@@ -74,6 +89,11 @@ public class DefaultBruteForceProtectionService implements BruteForceProtectionS
     }
   }
 
+  /**
+   * Reset password-reset counter
+   * 
+   * @param username
+   */
   @Override
   public void resetResetPasswordBruteForceCounter(String username) {
     Optional<ActiveUser> userOptional = getUser(username);
