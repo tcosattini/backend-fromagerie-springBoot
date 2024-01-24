@@ -19,6 +19,16 @@
       "projectName": "back-fromagerie",
       "args": "",
       "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Spring Boot-DemoSpringSecurityApplication<fromagerie>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "fr.diginamic.fromagerie.DemoSpringSecurityApplication",
+      "projectName": "fromagerie",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
     }
   ]
 }
