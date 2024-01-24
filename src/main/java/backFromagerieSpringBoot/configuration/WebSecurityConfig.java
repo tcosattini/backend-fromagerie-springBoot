@@ -59,7 +59,9 @@ public class WebSecurityConfig {
             .requestMatchers(new AntPathRequestMatcher("/user", "POST")).permitAll()
             .requestMatchers(new AntPathRequestMatcher("/exemples", "GET")).permitAll()
             .requestMatchers(new AntPathRequestMatcher("/h2-console/**")).permitAll()
-            .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole("ADMIN")
+            .requestMatchers(new AntPathRequestMatcher("/admin",
+                "GET"))
+            .permitAll()
             .anyRequest().authenticated())
         .cors(Customizer.withDefaults())
 
@@ -70,6 +72,7 @@ public class WebSecurityConfig {
             .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
             .ignoringRequestMatchers(new AntPathRequestMatcher("/login"))
             .ignoringRequestMatchers(new AntPathRequestMatcher("/reset-password"))
+            .ignoringRequestMatchers(new AntPathRequestMatcher("/admin"))
             .ignoringRequestMatchers(new AntPathRequestMatcher("/register"))
             .ignoringRequestMatchers(new AntPathRequestMatcher("/h2-console/**"))
             .csrfTokenRequestHandler(new XorCsrfTokenRequestAttributeHandler()::handle))

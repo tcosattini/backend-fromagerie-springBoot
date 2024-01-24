@@ -13,8 +13,8 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class DefaultBruteForceProtectionService implements BruteForceProtectionService {
 
-  private final int maxFailedLogins = 5;
-  private final int maxFailedResetPassword = 5;
+  private int maxFailedLogins = 5;
+  private int maxFailedResetPassword = 5;
 
   @Autowired
   ActiveUserRepository userRepository;
