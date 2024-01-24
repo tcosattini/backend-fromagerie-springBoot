@@ -82,7 +82,7 @@ public class RegisterTests {
         .content(registerData.toString()))
         .andExpect(status().isCreated());
 
-    this.activeUserRepository.delete(activeUser);
+
   }
 
   @Test
@@ -102,7 +102,6 @@ public class RegisterTests {
         .content(registerData.toString()))
         .andExpect(status().isBadRequest());
 
-    this.activeUserRepository.delete(activeUser);
   }
 
   @Test
