@@ -58,9 +58,8 @@ public class WebSecurityConfig {
             .requestMatchers(new AntPathRequestMatcher("/user", "POST")).permitAll()
             .requestMatchers(new AntPathRequestMatcher("/exemples", "GET")).permitAll()
             .requestMatchers(new AntPathRequestMatcher("/h2-console/**")).permitAll()
-            .requestMatchers(new AntPathRequestMatcher("/admin",
-                "GET"))
-            .permitAll()
+            .requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole("ADMIN")
+
             .anyRequest().authenticated())
         .cors(Customizer.withDefaults())
 

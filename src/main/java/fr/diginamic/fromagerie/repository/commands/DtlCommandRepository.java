@@ -9,6 +9,5 @@ import java.util.Optional;
 
 public interface DtlCommandRepository extends JpaRepository<DtlCode, Integer> {
   Optional<DtlCode> findById(Integer id);
-
   List<DtlCode> findAll();
 }
